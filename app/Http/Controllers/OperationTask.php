@@ -720,8 +720,8 @@ class OperationTask extends MasterController
                 $job_type_id = $request->input('job_type_id');
                 $search_type_id = $request->input('search_type_id'); //$searchARR['search_type_id'];
                 $fromDate = $request->input('fromDate');
-                $toDate = $request->input('todate');
-
+                $toDate = $request->input('todate');  // to date
+   
                 // Build the base query
                 $query = DB::table('job_details')
                     ->select(
