@@ -1,0 +1,503 @@
+.zx-dashboard {
+    min-height: 100vh;
+  }
+  .zx-dashboard .zx-register-wrap {
+    padding: 4vh 0 4vh 10vw;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+  .zx-dashboard .zx-register-wrap:before {
+    position: absolute;
+    z-index: 0;
+    background:url("/../../../images/hero-sm-1.jpg") no-repeat;
+    content: "";
+    min-height: 100%;
+    width: 35vw;
+    top: 0;
+    left: 0;
+  }
+  @media only screen and (max-width: 1199px) {
+    .zx-dashboard .zx-register-wrap {
+      padding: 8vh 0 8vh 10vw;
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    .zx-dashboard .zx-register-wrap {
+      padding: 6vh 0 6vh 6vw;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .zx-dashboard .zx-register-wrap {
+      padding: 5vh 4vw;
+    }
+  }
+  .zx-dashboard .zx-checkbox-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .zx-dashboard .zx-register-color {
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 45px;
+  }
+  @media only screen and (max-width: 991px) {
+    .zx-dashboard .zx-register-color {
+      padding: 15px;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .zx-dashboard .zx-register-color {
+      min-height: 100%;
+      padding: 20px 30px;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+  }
+  .zx-dashboard .zx-register-img {
+    padding: 40px 50px;
+    min-height: 100%;
+      background: url("../img/register-bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center !important;
+    background-size: cover !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+  @media only screen and (max-width: 991px) {
+    .zx-dashboard .zx-register-img {
+      padding: 30px 20px;
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    .zx-dashboard .zx-register-img {
+      padding: 30px;
+    }
+  }
+  .zx-dashboard .zx-register-img:before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 0;
+  }
+  .zx-dashboard .zx-register-img:after {
+    content: "";
+    right: 0;
+    top: 20%;
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-right: 20px solid #fff;
+    border-bottom: 15px solid transparent;
+  }
+  .zx-dashboard .zx-header {
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+  }
+  .zx-dashboard .zx-header .zx-logo {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40vw;
+      font-size: 56px;
+      font-weight: bold;
+      color: #fff;
+  }
+  .zx-dashboard .zx-header h1 {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  @media only screen and (max-width: 991px) {
+    .zx-dashboard .zx-header h1 {
+      font-size: 30px;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .zx-dashboard .zx-header h1 {
+      font-size: 28px;
+    }
+  }
+  .zx-dashboard .zx-header p {
+    color: #fff;
+  }
+  .zx-dashboard .zx-content {
+    padding: 30px;
+    max-width: 560px;
+    width: 100%;
+  }
+  @media only screen and (max-width: 1199px) {
+    .zx-dashboard .zx-content {
+      padding: 0;
+    }
+  }
+  .zx-dashboard .zx-form {
+    margin-top: 20px;
+  }
+  .zx-dashboard .zx-form .zx-otp-logo {
+    margin-bottom: 20px;
+    display: block;
+  }
+  .zx-dashboard .zx-form h2 {
+    font-weight: 700;
+  }
+  .zx-dashboard .zx-form p {
+    margin-bottom:15px;
+    font-size: 16px;
+  }
+  .zx-dashboard .zx-form p span {
+    display: block;
+  }
+  .zx-dashboard .zx-form .zx-otp-label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .zx-dashboard .zx-form .form-group {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 15px;
+  }
+  .zx-dashboard .zx-form .form-group .input-label {
+    margin-bottom: 10px;
+  }
+  .zx-dashboard .zx-form .form-group .field-icon {
+    position: absolute;
+    z-index: 1;
+    right: 24px;
+    bottom: 18px;
+    padding: 0 5px;
+    color: #c5c5c5;
+    font-size: 14px;
+  }
+  .zx-dashboard .zx-form .form-group .field-icon:before {
+    padding: 17px 10px;
+  }
+  .zx-dashboard .zx-form .form-control {
+    min-height: 50px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0px 30px 0px 15px;
+    color: #111;
+      position: relative;
+  }
+  .zx-dashboard .zx-form input::-webkit-input-placeholder {
+    color: #a1a1a1;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .zx-dashboard .zx-form input::-moz-placeholder {
+    color: #a1a1a1;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .zx-dashboard .zx-form input:-moz-placeholder {
+    color: #a1a1a1;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .zx-dashboard .zx-form input:-ms-input-placeholder {
+    color: #a1a1a1;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .zx-dashboard .zx-form .zx-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+  }
+  .zx-dashboard .zx-form .zx-form-row .zx-form-col {
+    margin-right: 10px;
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+  .zx-dashboard .zx-form .zx-form-row .zx-form-col:last-child {
+    margin-right: 0;
+  }
+  .zx-dashboard .zx-form .zx-form-btn {
+    margin-bottom: 20px;
+  }
+  .zx-dashboard .zx-btn-fill {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    border: 0;
+    color: #fff;
+    border-radius: 6px;
+    background-color: #336aea;
+    padding: 15px 36px;
+    margin-bottom: 10px;
+    width: 100%;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .zx-dashboard .zx-btn-fill:hover {
+    background-color: #053bb7;
+    border-color: #053bb7;
+  }
+  .zx-dashboard .zx-btn-fill:focus {
+    outline: none;
+  }
+  
+  .zx-dashboard .switcher-text {
+    color: #63bbff;
+    font-size: 15px;
+    margin-bottom: 5px;
+    display: block;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .zx-dashboard .switcher-text:hover {
+    color: #000000;
+  }
+  .zx-dashboard .switcher-text2 {
+    color: #63bbff;
+    font-size: 15px;
+    display: inline-block;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .zx-dashboard .switcher-text2.inline-text {
+    margin-left: 3px;
+  }
+  .zx-dashboard .switcher-text2:hover {
+    color: #000000;
+  }
+  .zx-dashboard .checkbox {
+    padding-left: 5px;
+    margin-right: 30px;
+    margin-bottom: 5px;
+  }
+  .zx-dashboard .checkbox label {
+    padding-left: 20px;
+    color: #a4a4a4;
+    margin-bottom: 0;
+    font-size: 15px;
+    position: relative;
+  }
+  .zx-dashboard .checkbox label:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 4px;
+    left: 0;
+    margin-left: -5px;
+    border: 1px solid;
+    border-color: #dcdcdc;
+    border-radius: 3px;
+    background-color: #fff;
+    -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+  .zx-dashboard .checkbox label:after {
+    position: absolute;
+    margin-left: -20px;
+    padding-left: 3px;
+    font-size: 10px;
+    color: #555555;
+  }
+  .zx-dashboard .checkbox input[type="checkbox"] {
+    display: none;
+  }
+  .zx-dashboard .checkbox input[type="checkbox"]:checked + label::after {
+    font-family: 'Font Awesome 5 Free';
+    content: "\f00c";
+    font-weight: 900;
+    color: #ffffff;
+    left: 15px;
+    top: 4px;
+  }
+  .zx-dashboard .checkbox input[type="checkbox"]:checked + label::before {
+    background-color: #01cc66;
+    border-color: #01cc66;
+  }
+  .zx-content .nav-pills {
+    background-color: #edf0ff;
+    padding: 6px;
+    border-radius: 10px;
+    display: inline-flex;
+  }
+  .zx-content .nav-pills .nav-item button {
+    padding: 10px 35px;
+  }
+  .zx-dashboard .zx-form .form-group svg {
+    position: absolute;
+    right: 15px;
+    top: 50px;
+  }
+  
+  .zx-dashboard-style-line {
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .zx-dashboard-style-line span {
+    text-align: center;
+    font-size: 15px;
+    color: #acacac;
+    display: inline-block;
+    position: relative;
+    padding: 0 25px;
+    z-index: 1;
+  }
+  .zx-dashboard-style-line span:before {
+    display: inline-block;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #cfcfcf;
+    left: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    z-index: 1;
+  }
+  .zx-dashboard-style-line span:after {
+    display: inline-block;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #cfcfcf;
+    right: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    z-index: 1;
+  }
+  .zx-dashboard-socials {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-right: -5px;
+    margin-left: -5px;
+      list-style: none;
+  }
+  .zx-dashboard-socials li {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 10px;
+  }
+  .zx-dashboard-socials li a {
+    border-radius: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 20px;
+    height: 60px;
+    width: 80px;
+    border: 1px solid;
+    border-color: #cfcfcf;
+    background-color: #fefefe;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .zx-dashboard-socials li a svg {
+      width:24px;
+      height: 24px;
+  }
+  @media only screen and (max-width: 767px) {
+    .zx-dashboard-socials li a {
+      font-size: 18px;
+      height: 50px;
+      width: 60px;
+    }
+  }
+  .zx-dashboard-socials li a:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    -webkit-box-shadow: 0 0 62px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 62px 0 rgba(0, 0, 0, 0.1);
+  }
+  .zx-dashboard-socials li.fxt-google a {
+    color: #CC3333;
+  }
+  .zx-dashboard-socials li.fxt-apple a {
+    color: #132133;
+  }
+  .zx-dashboard-socials li.fxt-facebook a {
+    color: #3b5998;
+  }
+  .zx-dashboard-socials li.zx-dashboard-google a svg {
+      fill: #CC3333;
+  }
+  .zx-dashboard-socials li.zx-dashboard-facebook a svg {
+      fill: #3b5998;
+      width: 20px;
+      height: 20px;
+  }
+  .zx-dashboard-socials li.zx-dashboard-apple a svg {
+      fill: #132133;
+  }
+  
+  
+   .error_show{
+       display: inline-block;
+    padding:0px 10px;
+    width: 100%;
+    margin-top: 8px;
+    }
+    
+    
+    .call_reviw .form-control {
+    display: inline;
+    width: inherit;
+}
