@@ -144,7 +144,7 @@
                                                                v-for="(emails, index) in allemails.emaillist" 
                                                                :class="['clickable-row unread', emails.email_assign === 1 ? ' fw-bold' : '']"   
                                                                :key="index">
-                                                                <td @click="getemailDetails(emails)">
+                                                                <td data-bs-toggle="offcanvas" data-bs-target="#mailcanvasRight" aria-controls="mailcanvasRight" @click="getemailDetails(emails)">
                                                                     <div class="d-flex justify-content-start">
                                                                         
                                                                         <div class="vq_id">
@@ -156,7 +156,7 @@
                                                                 <td >
                                                                     <i class="ti ti-calendar-event"></i> {{  (emails.email_date  || emails.createdOn) }}
                                                                 </td>
-                                                                <td @click="getemailDetails(emails)"  style="max-width: 300px;" >
+                                                                <td data-bs-toggle="offcanvas" data-bs-target="#mailcanvasRight" aria-controls="mailcanvasRight" @click="getemailDetails(emails)"  style="max-width: 300px;" >
                                                                     {{  emails.email_sender || emails.email_fromaddress }}
 
                                                                     <!--<div class="mail-dropdown">
@@ -188,7 +188,7 @@
                                                                     
                                                                 </td>
 
-                                                                <td  @click="getemailDetails(emails)" class="subject-old text-truncate" style="max-width: 250px;">
+                                                                <td data-bs-toggle="offcanvas" data-bs-target="#mailcanvasRight" aria-controls="mailcanvasRight"  @click="getemailDetails(emails)" class="subject-old text-truncate" style="max-width: 250px;">
                                                                     {{  emails.email_subject }}
                                                                 </td>
 
@@ -896,17 +896,17 @@ export default {
     // Fetch email details and open offcanvas
    
         const getemailDetails = (emails) => {
-            emaildetails.value = emails;
-            const offcanvasElement = document.getElementById('mailcanvasRight');
-            if (offcanvasElement) {
-                let offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                if (!offcanvasInstance) {
-                    offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
-                }
-                offcanvasInstance.show();
-            } else {
-                console.warn('Offcanvas element not found.');
-            }
+             emaildetails.value = emails;
+            // const offcanvasElement = document.getElementById('mailcanvasRight');
+            // if (offcanvasElement) {
+            //     let offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            //     if (!offcanvasInstance) {
+            //         offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+            //     }
+            //     offcanvasInstance.show();
+            // } else {
+            //     console.warn('Offcanvas element not found.');
+            // }
                 
         };
 

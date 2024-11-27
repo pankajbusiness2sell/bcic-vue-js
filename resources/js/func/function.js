@@ -246,6 +246,64 @@ export function useCommonFunction() {
                   return date.toLocaleString('en-US', { weekday: 'short' }); // Returns 'Mon', 'Tue', etc.
               };
 
+              function datetimefm(dateString) {
+                if (dateString != '0000-00-00 00:00:00') {
+                  const date = new Date(dateString);
+              
+                  // Extract date parts
+                  const day = date.getDate();
+                  const month = date.toLocaleString('en-US', { month: 'short' }); // Full month name
+                  const year = date.getFullYear();
+                  const hours = date.getHours();
+                  const minutes = date.getMinutes().toString().padStart(2, '0');
+                  const period = hours >= 12 ? 'PM' : 'AM';
+              
+                  // Convert hours to 12-hour clock
+                  const formattedHours = hours % 12 || 12;
+              
+                  // Add suffix to the day
+                  const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
+                                 (day % 10 === 2 && day !== 12) ? 'nd' :
+                                 (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+              
+                  // Combine into the desired format
+                  return `${day}${suffix}, ${month}, ${year} at ${formattedHours}:${minutes} ${period}`;
+                } else {
+                  return null;
+                }
+              }
+
+              function timefm(dateString) {
+
+                if (dateString != '0000-00-00 00:00:00') {
+                  const date = new Date(dateString);
+              
+                  // Extract date parts
+                  const day = date.getDate();
+                  const month = date.toLocaleString('en-US', { month: 'short' }); // Full month name
+                  const year = date.getFullYear();
+                  const hours = date.getHours();
+                  const minutes = date.getMinutes().toString().padStart(2, '0');
+                  const period = hours >= 12 ? 'PM' : 'AM';
+              
+                  // Convert hours to 12-hour clock
+                  const formattedHours = hours % 12 || 12;
+              
+                  // Add suffix to the day
+                  const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
+                                 (day % 10 === 2 && day !== 12) ? 'nd' :
+                                 (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+              
+                  // Combine into the desired format
+                  return `${day}${suffix}, ${month}, ${formattedHours}:${minutes} ${period}`;
+                  
+                } else {
+                   return null;
+                }
+                
+              }
+              
+
 
              
         return {
@@ -266,6 +324,8 @@ export function useCommonFunction() {
 
           ymdformat,
           dsyformat,
-          daynameformat
+          daynameformat,
+          datetimefm,
+          timefm
         };
   }

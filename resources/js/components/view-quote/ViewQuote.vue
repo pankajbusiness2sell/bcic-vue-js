@@ -1,5 +1,5 @@
 <template>
-    <Header />
+    <OperationHeader />
 
     <div class="page-wrapper">
         <div class="content">
@@ -184,7 +184,9 @@
                                              <!-- <pre>{{  data }}</pre> -->
                                             <td class="bc_click_btn pick_row">
                                                 <div class="t_vq_id" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ID"> 
-                                                    <a href="javascript:void(0);"  @click="QuotesidePanel(data.id)"  >{{ data.id }}</a> </div>
+                                                    <!-- <a href="javascript:void(0);"  @click="QuotesidePanel(data.id)"  >{{ data.id }}</a>  -->
+                                                    <a href="javascript:void(0);"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasViewqright" aria-controls="offcanvasViewqright"  @click="QuotesidePanel(data.id)"  >{{ data.id }}</a> 
+                                                </div>
                                             </td>
                                             <td class="pick_row">
                                                 <div class="t_vq_id"   v-if="data.booking_id > 0"
@@ -206,13 +208,13 @@
                                                  {{  data.job_ref }}
                                                 <!-- <div class="vq_website" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Website"><i class="ti ti-world-www"></i></div> -->
                                             </td>
-                                            <td class="bc_click_btn" title="21st Jun 2024">
+                                            <td class="bc_click_btn" :title="data.date">
                                                <div class="vq_ids" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Quote Date">{{ data.date }} </div>
                                             </td>
-                                             <td class="bc_click_btn" title="21st Jun 2024">
+                                             <td class="bc_click_btn" :title="data.createdOn">
                                                <div class="vq_ids" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Quote Date"> {{ data.createdOn }}</div>
                                             </td>
-                                            <td class="bc_click_btn" title="04th Jul 2024">{{ data.booking_date }}</td>
+                                            <td class="bc_click_btn" :title="data.booking_date">{{ data.booking_date }}</td>
                                             <td class="bc_click_btn">{{ data.name }}</td>
                                             <td class="bc_click_btn" :title="data.email"> <a :href="'mailto:' + data.email">{{ data.email }}</a></td>
                                             <td class="bc_click_btn"><a :href="'tel:' + data.phone">{{ data.phone }}</a></td>
@@ -278,7 +280,8 @@
 
 import {defineComponent , ref ,reactive, onMounted } from 'vue'; // Import necessary functions;
 import QuoteNotes from './../notes/QuoteNotes.vue';
-import Header from './../Header.vue';
+import  OperationHeader  from '@/header/Operation.vue';
+//import Header from './../Header.vue';
 import Swal from 'sweetalert2'
 import { useCommonFunction } from './../../func/function.js';
 //import { useRoute } from 'vue-router';
@@ -289,7 +292,7 @@ export default defineComponent({
        
         components: {
             QuoteNotes,
-            Header
+            OperationHeader
         },
       setup(props) { 
 
@@ -542,13 +545,13 @@ export default defineComponent({
                          QuotesidePanelInfo.value = data;
                          
                         // Initialize and show the Bootstrap offcanvas
-                        const offcanvasElement = document.getElementById('offcanvasViewqright');
-                        if (offcanvasElement) {
-                            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-                            offcanvas.show();
-                        } else {
-                           console.warn('Element with ID offcanvasViewqright not found.');
-                        }
+                        // const offcanvasElement = document.getElementById('offcanvasViewqright');
+                        // if (offcanvasElement) {
+                        //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        //     offcanvas.show();
+                        // } else {
+                        //    console.warn('Element with ID offcanvasViewqright not found.');
+                        // }
 
 
                     } catch (error) {

@@ -1536,6 +1536,7 @@ class JobPopup extends MasterController
                 // dd($getAllDenied);
                 $DenyArr = array(1=>'Admin', 2=>'Auto',3=>'Staff');
                 $denyType1 = array(1=>'Deny',2=>'Re-Assign');
+                
                 foreach ($getAllDenied as $denyInfoArray) {
                     foreach ($denyInfoArray as $denyInfo) {
                         // Assuming $denyInfo is an object
@@ -1545,10 +1546,10 @@ class JobPopup extends MasterController
         
                         $reason = '';
                         $denyType = '';
-                        if ($denyInfo->assign_type == 3) {
+                        if ($denyInfo->assign_type == 3) { 
                             $denyDetails = $this->getReasonForDeny($denyInfo->job_id, $denyInfo->staff_id);
-                            $reason = isset($denyDetails->reason_id) ? $denyDetails->reason_id : '';
-                            $denyType = isset($denyDetails->deny_type) ? $denyType1[$denyDetails->deny_type] : '';
+                            $reason = (!empty($denyDetails['reason_id'])) ? $denyDetails['reason_id'] : '';
+                            $denyType = (!empty($denyDetails['deny_type'])) ? $denyType1[$denyDetails['deny_type']] : '';
                         }
         
                         $denyReassignHistory[] = [

@@ -1,5 +1,7 @@
 <?php  
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Sites;
 use App\Models\QuoteFor;
 use App\Models\JobType;

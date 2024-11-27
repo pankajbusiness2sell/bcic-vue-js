@@ -39,7 +39,8 @@
            </div>
            <div class="vq-sidebar_btns">
               <ul class="d-flex justify-content-between">
-                 <li><a href="javascript:void(0);" @click="showQuoteQue(SidequoteData.id)"  aria-controls="offcanvasQuestionquote" class="vq_sms"><i class="ti ti-help-octagon"></i> Quote Question</a></li>
+                <li><a  href="javascript:void(0);"  @click="showQuoteQue(SidequoteData.id)"  data-bs-toggle="modal" data-bs-target="#QuestionquoteModal">Quote Questions</a></li>
+                 <!-- <li><a href="javascript:void(0);" @click="showQuoteQue(SidequoteData.id)"  aria-controls="offcanvasQuestionquote" class="vq_sms"><i class="ti ti-help-octagon"></i> Quote Question</a></li> -->
               </ul>
            </div>
            
@@ -74,42 +75,49 @@
 
 
       <!--View Quote Start Here -->
-      <div class="modal fade" id="viewquotsModalLg"  tabindex="-1" aria-labelledby="viewquotsModalLgLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title h4" id="viewquotsModalLgLabel">View Quote</h5>
-            | <a @click="showEmailQuote(SidequoteData.id , 1)">Send Email</a>
-                <!-- <span style="float: right;padding-left: 49px;color: red;" v-if="sendViewQuoteSMS">Send Email sucessfully</span> -->
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal fade" id="viewquotsModalLg"  tabindex="-1" aria-labelledby="viewquotsModalLgLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title h4" id="viewquotsModalLgLabel">View Quote</h5>
+                | <a @click="showEmailQuote(SidequoteData.id , 1)">Send Email</a>
+                    <!-- <span style="float: right;padding-left: 49px;color: red;" v-if="sendViewQuoteSMS">Send Email sucessfully</span> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <ViewInvoice 
+                    :invoicedetails="invoiceDetails"
+                    ></ViewInvoice> 
+             </div>
+           </div>
+       </div> 
+
+
+        <div class="modal fade" id="QuestionquoteModal" tabindex="-1" aria-labelledby="QuestionquoteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-4" id="QuestionquoteModal">
+                    <h4 class="offcanvas-title" id="offcanvasRightLabel">Quote Questions For : {{  QuoteQuestionData.job_type_id  }}</h4>
+                    <h6>Quote ID : #{{  QuoteQuestionData.quote_id }}</h6>
+                    <QuoteNotification v-if="showNotification" message="Your Quote Question is submitted successfully." />
+                
+                
+                    </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <QuoteQuestion 
+                    :quote-questions="QuoteQuestionData.quoteQuestions" 
+                    :question-ids="QuoteQuestionData.questionIds" 
+                    @save-questions="handleSaveQuestions" 
+                    />
+                </div>
+              </div>
             </div>
-                <ViewInvoice 
-                :invoicedetails="invoiceDetails"
-                ></ViewInvoice> 
-        </div>
-    </div>
-    </div> 
-
-
-    <div class="bcic_quote_offcanvas offcanvas offcanvas-end" tabindex="-1" id="offcanvasQuestionquote" aria-labelledby="offcanvasQuestionquoteLabel">
-        <div class="offcanvas-header">
-    
-          <div> 
-            <h4 class="offcanvas-title" id="offcanvasRightLabel">Quote Questions For : {{  QuoteQuestionData.job_type_id  }}</h4>
-            <h6>Quote ID : #{{  QuoteQuestionData.quote_id }}</h6>
-            <QuoteNotification v-if="showNotification" message="Your Quote Question is submitted successfully." />
           </div>
-          
-           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
-        </div>
-        <QuoteQuestion 
-          :quote-questions="QuoteQuestionData.quoteQuestions" 
-          :question-ids="QuoteQuestionData.questionIds" 
-          @save-questions="handleSaveQuestions" 
-        />
-    
-    </div>
+
+          
 
     <div class="modal fade" id="sendcustomeSMS" tabindex="-1" aria-labelledby="exampleModalSmLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">
@@ -187,6 +195,9 @@
 
   <script>
 import { defineComponent, ref,  isRef,isReactive , toRefs , onMounted, watch } from 'vue';
+
+//import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import QuoteNotesList from './../notes/QuoteNoteslist.vue';
 import ViewInvoice from  './../quote/ViewInvoice.vue';
 import QuoteNotification  from './../notification/QuoteNotification.vue';
@@ -364,7 +375,7 @@ export default defineComponent({
 
 
             const showNotification = ref(false);
-            const showQuoteQue = async (quote_id) =>{
+            const showQuoteQue = async (quote_id) => {
 
                 // const offcanvasElement = document.getElementById('offcanvasViewqright');
                 // if (offcanvasElement) { 
@@ -374,14 +385,13 @@ export default defineComponent({
                 //      console.warn('Element with ID offcanvasViewqright not found.');
                 // }
 
-
-                const offcanvasElementQues = document.getElementById('offcanvasQuestionquote');
-                if (offcanvasElementQues) { 
-                     const offcanvas = new bootstrap.Offcanvas(offcanvasElementQues);
-                     offcanvas.show();
-                } else {
-                     console.warn('Element with ID offcanvasQuestionquote not found.');
-                }
+                    // const offcanvasElementQues = document.getElementById('offcanvasQuestionquote');
+                    // if (offcanvasElementQues) { 
+                    //      const offcanvas = new bootstrap.Offcanvas(offcanvasElementQues);
+                    //      offcanvas.show();
+                    // } else {
+                    //      console.warn('Element with ID offcanvasQuestionquote not found.');
+                    // }
 
 
                   try {
@@ -395,6 +405,8 @@ export default defineComponent({
                       QuoteQuestionData.value.quoteQuestions = response.data.quote_questions;
                       QuoteQuestionData.value.quote_id = quote_id;
                       showNotification.value = false;
+
+                      console.log(QuoteQuestionData.value);
 
                       
                   } catch (error) { 

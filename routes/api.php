@@ -26,7 +26,7 @@ Route::get('/fetch-post-items', [QuoteAPIController::class, 'getPostCode']);
 Route::get('/get-sites', [QuoteAPIController::class, 'getSiteslocation']);
 Route::get('/quote-for', [QuoteAPIController::class, 'getQuoteFor']);
 Route::get('/job-type', [QuoteAPIController::class, 'jobtypeids']);
-Route::get('/job-type-info/{id}', [QuoteAPIController::class, 'JobTypeInfo']);
+Route::get('/job-type-info/{id?}', [QuoteAPIController::class, 'JobTypeInfo']);
 
 
 

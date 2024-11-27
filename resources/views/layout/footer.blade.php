@@ -6,14 +6,12 @@
    
   @vite('resources/js/app.js')
 
+
+  <!-- <script src="{{ url('assets/js/bootstrap.bundle.min.js') }}" defer></script> -->
   <script src="{{ url('assets/js/jquery-3.7.1.min.js') }} "></script>
   <script src="{{ url('assets/js/feather.min.js') }} "></script>
-  <script src="{{ url('assets/js/jquery.slimscroll.min.js') }} "></script>  
-  <script src="{{ url('assets/js/bootstrap.bundle.min.js') }}" defer></script>
-
-  <!-- Template Main JS File -->
   <script src="{{ url('assets/js/main.js') }} "></script>
-
+  <script src="{{ url('assets/js/jquery.slimscroll.min.js') }} "></script>  
   
 
 </body>

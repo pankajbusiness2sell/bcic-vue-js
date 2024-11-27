@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\TempQuote;
 use App\Models\TempDetails;
@@ -24,6 +26,7 @@ use App\Models\StaffApplication;
 use App\Models\Staff;
 use App\Models\StaffJobsStatus;
 use App\Models\ReasonForDeny;
+use App\Models\JobType;
 
 
 class MasterController extends Controller
@@ -37,6 +40,7 @@ class MasterController extends Controller
         function create_quote_desc_str($r){
 	  
                 $desc = "";
+                $checkproprty = array('1'=>'Yes','2'=>'No');
                 if($r['job_type_id']=="1"){ 
                 
                           if($r['bed']>0){ $desc.=' '.$r['bed'].' Beds,'; }
@@ -62,7 +66,7 @@ class MasterController extends Controller
                           
                 }else if ($r['job_type_id']=="2"){
                     
-                     $checkproprty = array('1'=>'Yes','2'=>'No');
+                     
                      $islift = array('1'=>'Ground Floor','2'=>'1st Floor','3'=>'2nd Floor', '4'=>'Above');
                     
                          if($r['bed']>0){ $desc.=' '.$r['bed'].' Beds,'; }
@@ -499,6 +503,7 @@ class MasterController extends Controller
 
         public function ReviewTask($adminid, $search_type, $search_value, $salesid = 0)
         {
+                $reviewStatus = dd_value(152);
                 // Build the initial query 
                 $query = DB::table('sales_task_track')
                         ->select(
@@ -551,7 +556,7 @@ class MasterController extends Controller
                 //->Limit(30);
 
                 // Execute the query and process the results
-                $reviewtask = $query->get()->map(function ($data) {
+                $reviewtask = $query->get()->map(function ($data) use ($reviewStatus) {
                         $quoteInfo = QuoteNew::select('id', 'review_status')
                         ->where('id', $data->quote_id)
                         ->first();
@@ -601,7 +606,7 @@ class MasterController extends Controller
                                 'quotedate' => $quotedate,
                                 'imgstr' => $getData,
                                 'amount' => (!empty($quoteInfo->amount)) ? (float) $quoteInfo->amount : 0,
-                                'reclean_status' =>  (!empty($reclean_status)) ? @$recleanTaskStatus[$reclean_status] : '',
+                                'reclean_status' =>  (!empty($quoteInfo->review_status)) ? @$reviewStatus[$quoteInfo->review_status] : '',
                                 //'infoName' => $infoName, // Include the staff info name
                                 
                          ]);
@@ -1875,7 +1880,13 @@ class MasterController extends Controller
                                 ->where('staff_id', $staff_id)
                                 ->first();
 
-                        return ['reason_id' => $reason->resanmaname, 'deny_type' => $reason->deny_type];
+                         if(!empty($reason)) {
+                                return ['reason_id' => $reason->resanmaname, 'deny_type' => $reason->deny_type];
+                         }     else{
+
+                                return ['reason_id' => '', 'deny_type' => ''];
+                         }   
+                        
                 }
 
                 function RemovedummyText($body) {
@@ -1888,6 +1899,111 @@ class MasterController extends Controller
                          //$cleanedHtml = preg_replace('/Â| +/', '', $cleanedHtml);
                          return $cleanedHtml;
                 }
+
+                function getDistanceDataForStaff($addressFrom, $addressTo, $unit = 'K')
+                {
+
+                        return [
+                                'distance' => '',
+                                'time' => '',
+                        ];
+
+                        // Define the Google API key
+                        $apiKey = config('services.google_maps.key');
+                        
+                        if (empty($apiKey)) {
+                                Log::error('Google Maps API key is missing.');
+                                return [
+                                        'distance' => '',
+                                        'time' => '',
+                                ];
+                        }
+
+                        //\Log::info('API Key Retrieved: ' . $apiKey); 
+
+                        // Change address format
+                        $formattedAddrFrom = str_replace(' ', '+', trim($addressFrom));
+                        $formattedAddrTo = str_replace(' ', '+', trim($addressTo));
+                        
+                        // Geocoding API request URL
+                        $url = "https://maps.googleapis.com/maps/api/directions/json?origin=" . strtolower($formattedAddrFrom) . "&destination=" . strtolower($formattedAddrTo) . "&key=" . $apiKey;
+
+                        
+                        // Make the API request
+                        $response = Http::get($url);
+
+                        // Log::info('Request URL: '  ,  $response); 
+                        
+                        if ($response->successful()) {
+                                $data = $response->json();
+                                
+                                if (isset($data['routes'][0]['legs'][0])) {
+                                $distance = $data['routes'][0]['legs'][0]['distance']['text'];
+                                $time = $data['routes'][0]['legs'][0]['duration']['text'];
+
+                                return [
+                                        'distance' => $distance ?? '',
+                                        'time' => $time ?? '',
+                                ];
+                                }
+                        }
+
+                        return [
+                                'distance' => '',
+                                'time' => '',
+                        ];
+                }
+
+                function getParentJobType() {
+                        $jobTypes = [
+                                1 => 'Cleaning',
+                                2 => 'Carpet',
+                                3 => 'Pest',
+                                11 => 'Removal'
+                            ];
+                           
+                        return $jobTypes;    
+                }
+
+                function getAusTimeZonelist () 
+                {
+                        $timezone = [
+                                        'Adelaide' => 'Australia/Adelaide',
+                                        'Perth' => 'Australia/Perth',
+                                        'Brisbane' => 'Australia/Brisbane',
+                                        'Sydney' => 'Australia/Sydney',
+                                        'Darwin' => 'Australia/Darwin',
+                                        'Hobart' => 'Australia/Hobart',
+                                    ];
+
+                        return $timezone;
+                }
+
+                function getJobTypeInfoData(Request $request) {
+
+                        $data_type = $request->input('data_type' , 0);
+                 
+                        // Get Parent Job type
+                        if($data_type == 1) {
+                             $jobTypes = JobType::select('id','name','job_text','value', 'job_amount')->where('p_id', '!=', 9)
+                                     ->orWhere('id', 9)
+                                     ->get()->keyBy('id');
+                 
+                             return response()->json($jobTypes);
+                  
+                         // Child Job type    
+                        }else if($data_type == 2) {
+                 
+                             $jobTypes = JobType::select('id','name','job_text','value','job_amount')->where('p_id', 9)->get()->keyBy('id');
+                             return response()->json($jobTypes);
+
+                        }else{
+
+                              $jobTypes = JobType::select('id','name','job_text','value','job_amount')->get();
+                              return response()->json($jobTypes);
+                        }
+                 
+                 }
 
 
                

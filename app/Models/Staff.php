@@ -13,6 +13,12 @@ class Staff extends Model
     public $timestamps = false;
 
 
+        // Define the relationship with SubStaff
+        public function substafflist()
+        {
+            return $this->hasMany(Substaff::class, 'staff_id', 'id')->where('status', 1);
+        }
+
 }
 
 

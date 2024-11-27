@@ -1,7 +1,9 @@
 <?php
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -160,6 +162,24 @@ Route::get('/job-un-assigned', [App\Http\Controllers\OperationTask::class, 'JobU
 Route::get('/get-un-assign-data', [App\Http\Controllers\OperationTask::class, 'getunAssigndata']);
 Route::get('/get-job-un-assign-data-by-site', [App\Http\Controllers\OperationTask::class, 'getunAssignDataBySites']);
 
+Route::get('/gps-location', [App\Http\Controllers\OperationTask::class, '_GpsLocationPages']);
+Route::get('/dispatch-report', [App\Http\Controllers\OperationTask::class, '_dispatchReports']);
+Route::get('/gps-data', [App\Http\Controllers\OperationTask::class, 'GetGpsLocationData']);
+Route::get('/get-job-type', [App\Http\Controllers\OperationTask::class, 'getJobType']);
+Route::get('/dispatch-get-staff-list', [App\Http\Controllers\OperationTask::class, 'dispatchStaffList']);
+
+Route::get('/get-dispatch-date', [App\Http\Controllers\OperationTask::class, 'getdispatchDateinfo']);
+Route::post('/check-staff-roster', [App\Http\Controllers\OperationTask::class, 'IscheckStaffRoster']);
+Route::get('/get-job-type-data', [App\Http\Controllers\OperationTask::class, 'getJobTypeInfoData']);
+
+Route::get('/bcic-chat', [App\Http\Controllers\BCICChatController::class, 'bcic_chat']);
+Route::get('/chat-get-staff-list', [App\Http\Controllers\BCICChatController::class, 'getStaffChatlist']);
+Route::get('/chat-details', [App\Http\Controllers\BCICChatController::class, 'getchatDetails']);
+Route::post('/send-chat-message', [App\Http\Controllers\BCICChatController::class, 'sendChatMessage']);
+
+
+
+Route::get('/bcic-sms', [App\Http\Controllers\BCICSms::class, 'bcic_sms']);
 
 
 Route::get('/vuefile', [App\Http\Controllers\Quote::class, 'vuefile']);

@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+ //\App\Models\Category::all()
+
+ use App\Services\BCICChatService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind BCICChatService
+        $this->app->singleton(BCICChatService::class, function ($app) {
+            return new BCICChatService();
+        });
     }
 
     /**
@@ -20,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-        // DB::statement("SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION,NO_ZERO_IN_DATE,NO_ZERO_DATE'");
+
+         //View::share('somedata', 'allinfo');
+         
     }
 }

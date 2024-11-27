@@ -49,7 +49,7 @@ trait OperationTask
             // Handle different stages based on the provided key
             switch ($stagesKey) {
                 case '1':
-                    \Log::info('Stage Key 1 condition met');
+                    Log::info('Stage Key 1 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) use ($currentDate) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('job_details')
@@ -61,7 +61,7 @@ trait OperationTask
         
                 case '4':
                 case '6':
-                    \Log::info('Stage Key 4 or 6 condition met');
+                    Log::info('Stage Key 4 or 6 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) use ($currentDate) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('job_details')
@@ -72,7 +72,7 @@ trait OperationTask
                     break;
         
                 case '7':
-                    \Log::info('Stage Key 7 condition met');
+                    Log::info('Stage Key 7 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) use ($currentDate) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('job_details')
@@ -83,7 +83,7 @@ trait OperationTask
                     break;
         
                 case '9':
-                    \Log::info('Stage Key 9 condition met');
+                    Log::info('Stage Key 9 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('re_quoteing')
@@ -97,7 +97,7 @@ trait OperationTask
                     break;
         
                 case '10':
-                    \Log::info('Stage Key 10 condition met');
+                    Log::info('Stage Key 10 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) use ($currentDate) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('job_details')
@@ -108,7 +108,7 @@ trait OperationTask
                     break;
         
                 case '11':
-                    \Log::info('Stage Key 11 condition met');
+                    Log::info('Stage Key 11 condition met');
                     $query->whereIn('jobs.id', function ($subQuery) use ($currentDate) { // Qualify the id
                         $subQuery->select('job_id')
                             ->from('job_details')
@@ -122,7 +122,7 @@ trait OperationTask
                     break;
         
                 default:
-                    \Log::info('No valid stagesKey provided.');
+                    Log::info('No valid stagesKey provided.');
                     return [];
             }
         
@@ -131,12 +131,12 @@ trait OperationTask
                 $results = $query->get();
         
                 if ($results->isEmpty()) {
-                    \Log::info('No results found for Stage Key: ' . $stagesKey);
+                    Log::info('No results found for Stage Key: ' . $stagesKey);
                 }
         
                 return $results->isNotEmpty() ? $results : [];
             } catch (\Exception $e) {
-                \Log::error('Query Error: ' . $e->getMessage());
+                Log::error('Query Error: ' . $e->getMessage());
                 return []; // Handle error gracefully
             }
         }
@@ -676,6 +676,198 @@ trait OperationTask
         
             return $getjobInfo;
         }
+
+       
+          
+        //$jobdetails =  $this->getDispatchReport($job_type_id, $from_date , $to_date, $site_id, $staff_id , $is_work);
+            public function getDispatchReport($jobType, $startDate, $endDate)
+            {
+
+                //dump($jobType, $startDate, $endDate, $site_id , $staff_id , $no_work);
+
+                // Convert the start and end dates to the required format using Carbon
+                $startDate = Carbon::parse($startDate)->format('Y-m-d');
+                $endDate = Carbon::parse($endDate)->format('Y-m-d');
+
+                $jobStatus = dd_value(26);
+                
+                $query = DB::table('job_details')
+                ->select(
+                    'job_details.job_id',
+                    'job_details.quote_id',
+                    'job_details.job_type',
+                    'job_details.job_type_id',
+                    'job_details.job_date',
+                    'job_details.reclean_job',
+                    'job_details.staff_id',
+                    'quote_details.description',
+                    DB::raw('
+                        CONCAT(
+                            staff.name, "====",
+                            staff.mobile
+                        ) AS staffinfo
+                    '),
+                    DB::raw('
+                        CONCAT(
+                            quote_new.name, ", ",
+                            quote_new.email, ", ",
+                            quote_new.phone, ", ",
+                            quote_new.suburb, ", ",
+                            quote_new.postcode, ", ",
+                            quote_new.address
+                        ) AS quote_details
+                    '),
+                     DB::raw('(SELECT status 
+                              FROM jobs where jobs.id = job_details.job_id )
+                               AS jobstatus
+                    '),
+                    DB::raw('(SELECT reclean_date 
+                              FROM job_reclean 
+                              WHERE job_reclean.job_type_id = job_details.job_type_id 
+                                AND job_reclean.job_id = job_details.job_id 
+                                AND job_reclean.status != 2 
+                              LIMIT 1) AS recleandate')
+                )
+                ->join('quote_new', 'quote_new.id', '=', 'job_details.quote_id')
+
+                ->join('staff', 'staff.id', '=', 'job_details.staff_id')
+                ->join('quote_details', function ($join) {
+                    $join->on('quote_details.quote_id', '=', 'job_details.quote_id')
+                         ->on('quote_details.job_type_id', '=', 'job_details.job_type_id');
+                })
+                ->where('job_details.status', '!=', 2)
+                ->where('job_details.staff_id', '!=', 0)
+                ->whereBetween('job_details.job_date', [$startDate, $endDate]);
+            
+                // Apply job type filter if provided
+                if (!empty($jobType) && $jobType !== '0') {
+                    $query->where('job_details.job_type_id',  $jobType);
+                }
+
+                // Apply job type filter if provided
+                // if (!empty($site_id) && $site_id !== '0') {
+                //     $query->where('job_details.site_id', $site_id);
+                // }
+
+                // if (!empty($site_id) && $site_id != "0") {
+                //     $query->where(function ($queryNew) use ($site_id) {
+                //         $queryNew->where('staff.site_id', $site_id)
+                //             ->orWhere('staff.site_id2', $site_id)
+                //             ->orWhereIn('staff.all_site_id', [$site_id]);
+                //         });
+                // }
+
+                // // Apply job type filter if provided
+                // if (!empty($staff_id) && $staff_id !== '0') {
+                //     $query->where('job_details.staff_id', $staff_id);
+                // }
+
+                // // Apply job type filter if provided
+                // if (!empty($no_work) && $no_work !== '0') {
+                //     $query->where('staff.no_work', $no_work);
+                // }
+
+                
+                
+                // Filter for valid jobs based on the `jobs` table
+                $query->whereIn('job_details.job_id', function ($subQuery) {
+                    $subQuery->select('id')
+                        ->from('jobs')
+                        ->whereIn('status', [1, 3, 4, 5]);
+                });
+                
+                // Add reclean jobs by including `orWhereIn`
+                $query->orWhereIn('job_details.job_id', function ($recleanSubQuery) use ($startDate, $endDate) {
+                    $recleanSubQuery->select('job_id')
+                        ->from('job_reclean')
+                        ->where('status', '!=', 2)
+                        ->where('staff_id', '!=', 0)
+                        ->whereBetween('reclean_date', [$startDate, $endDate]);
+                });
+                
+                // Execute the query
+                $jobDetails = $query->get();
+                
+                // Initialize the result array
+                $groupedJobs = [];
+                $staffisactive = [];
+                
+                // Process the results
+                foreach ($jobDetails as $data) {
+                    // Use reclean_date if available, else use job_date
+                    $dateKey = !empty($data->recleandate) ? $data->recleandate : $data->job_date;
+                    
+                    // Ensure staff_id and dateKey are initialized
+                    if (!isset($groupedJobs[$data->staff_id][$dateKey])) {
+                        $groupedJobs[$data->staff_id][$dateKey] = [];
+                    }
+                    
+                    // Check if job_id already exists
+                    $existingIndex = null;
+                    foreach ($groupedJobs[$data->staff_id][$dateKey] as $index => $entry) {
+                        if ($entry['job_id'] === $data->job_id) {
+                            $existingIndex = $index;
+                            break;
+                        }
+                    }
+
+
+                    $staffinfo = (!empty($data->staffinfo)) ? $data->staffinfo : '';
+
+                     $stffinfodata = (!empty($staffinfo)) ? explode("====", $staffinfo) : [];
+                     
+                     $staffName = '';
+                     $staffmobile = '';
+
+                     if(!empty($stffinfodata)) {
+                         $staffName = $stffinfodata[0];
+                         $staffmobile = $stffinfodata[1];
+                     }
+                    
+
+                    //  $getStaffCheck = DB::table('staff_roster')
+                    //     ->where('staff_id', $data->staff_id)
+                    //     ->whereBetween('reclean_date', [$startDate, $endDate])
+                    //     ->get(); // Fetch the first matching row
+
+                    // $castatus =  $getStaffCheck->status;  //(!empty($getStaffCheck) && $getStaffCheck->status === 1) ? 1 : 0;
+                    // $staffisactive[$data->staff_id][$dateKey] = $castatus;
+
+                    if ($existingIndex !== null)  {
+
+                            // Add job_type to jobtypes array if not already present
+                            if (!in_array($data->job_type, $groupedJobs[$data->staff_id][$dateKey][$existingIndex]['jobtypes'])) {
+                                $groupedJobs[$data->staff_id][$dateKey][$existingIndex]['jobtypes'][] = ['job_name'=>$data->job_type, 'desc'=>$data->description,'staffName'=>$staffName, 'staffmobile'=>$staffmobile];
+                            }
+
+                    } else {
+                        // Add new job entry
+                        $groupedJobs[$data->staff_id][$dateKey][] = [
+                            'quote_details' => $data->quote_details,
+                            'job_id' => $data->job_id,
+                            'castatus' => 0,
+                            'quote_id' => $data->quote_id,
+                            'job_type_id' => $data->job_type_id,
+                            'job_date' => $data->job_date,
+                            'staffinfo' => $data->staffinfo,
+                            'jobstatusName' => (!empty($data->jobstatus)) ? $jobStatus[$data->jobstatus] : '',
+                            'jobstatus' => $data->jobstatus,
+                            'recleandate' => $data->recleandate,
+                            'reclean_job' => $data->reclean_job,
+                            'staff_id' => $data->staff_id,
+                            'jobtypes' => [['job_name'=>$data->job_type, 'desc'=>$data->description,'staffName'=>$staffName, 'staffmobile'=>$staffmobile]], // Initialize jobtypes array with current job_type
+                        ];
+                    }
+
+                   // $groupedJobs[$data->staff_id][$dateKey]['castatus'] = $castatus;
+                }
+                
+                // Return the grouped jobs
+                return ['jobdetails'=> $groupedJobs, 'staffroster'=>$staffisactive];
+            }
+
+
+      
 
         
 }

@@ -1,5 +1,5 @@
 <template>
-    <Header />
+    <OperationHeader />
     <div class="page-wrapper">
       <div class="content">
 
@@ -79,8 +79,8 @@
                   </div>
                  
                   <div class="col mb-3">
-                    <!-- <button type="submit" class="btn btn-primary bcic_btns"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"  @click="fetchAvailabilityData()" aria-controls="offcanvasRight">Check Availability</button> -->
-                    <button type="submit" class="btn btn-primary bcic_btns"  @click="fetchAvailabilityData()">Check Availability</button>
+                    <button type="submit" class="btn btn-primary bcic_btns"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"  @click="fetchAvailabilityData()" aria-controls="offcanvasRight">Check Availability</button>
+                    <!-- <button type="submit" class="btn btn-primary bcic_btns"  @click="fetchAvailabilityData()">Check Availability</button> -->
                   </div>
                 </div>
               </div>
@@ -686,7 +686,8 @@
     import JobTypeDiv from './JobTypeDiv.vue'; // Import necessary functions
     import QuoteQuestion from './QuoteQuestion.vue';
     import ViewInvoice from './ViewInvoice.vue';
-    import Header from './../Header.vue';
+    //import Header from './../Header.vue';
+    import  OperationHeader  from '@/header/Operation.vue';
     import Swal from 'sweetalert2'
 
     
@@ -1214,8 +1215,8 @@
                     return;
                 } else {
 
-                  const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
-                   offcanvas.show();
+                  //  const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
+                  //  offcanvas.show();
                    
                     let checkAvailData = {
                           suburb: QuoteFormDetails.value.postCode,

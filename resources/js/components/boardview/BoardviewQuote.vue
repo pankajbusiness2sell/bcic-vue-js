@@ -1,5 +1,5 @@
 <template>
-     <Header/>
+    <OperationHeader />
     <div class="page-wrapper">
         <div class="content">
             <div class="row">
@@ -217,7 +217,8 @@ import VoucherData from './track/VoucherData.vue';
 import QuoteNotes from './../notes/QuoteNotes.vue'; // Import the QuoteNotes component
 import TaskViewPopup from './TaskViewPopup.vue'; // Import the QuoteNotes component
 import TaskPopup from './track/Task/taskpopup.vue'; // Import the QuoteNotes component
-import Header from './../Header.vue';
+//import Header from './../Header.vue';
+import  OperationHeader  from '@/header/Operation.vue';
 
 export default defineComponent({ 
        
@@ -238,7 +239,7 @@ export default defineComponent({
 
            TaskViewPopup,
            TaskPopup,
-           Header,
+           OperationHeader,
        },
      setup(props) { 
         const norecord = ref('../assets/img/no_record_found.svg');
@@ -249,17 +250,17 @@ export default defineComponent({
             let pageid = allData.pageid;
             let tracktypeid = allData.Parenttrackid;
 
-             //console.log(pageid + ' === '+tracktypeid);
+             //console.log(pageid + ' === '+tracktypeid); 
 
                 if(pageid > 0 && pageid == 1) {
 
-                    const offcanvasElement = document.getElementById('offcanvasViewqrightSide');
-                        if (offcanvasElement) {
-                        const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-                        offcanvas.show();
-                        } else {
-                        console.warn('Element with ID offcanvasViewqrightSide not found.');
-                        }
+                        //  const offcanvasElement = document.getElementById('offcanvasViewqrightSide');
+                        //     if (offcanvasElement) {
+                        //     const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        //     offcanvas.show();
+                        //     } else {
+                        //     console.warn('Element with ID offcanvasViewqrightSide not found.');
+                        //     }
 
                         try {
                         // Retrieve CSRF token

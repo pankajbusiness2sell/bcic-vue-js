@@ -32,7 +32,7 @@
           <button class="btn btn-soft-success me-1" @click="triggerPopupinfo(trackData)" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
             <i class="ti ti-pencil-minus"></i>
           </button>
-          <!-- <button class="btn btn-soft-info" @click="gettrackInfo(trackData.app_id, trackData.pageid)">
+          <!-- <button class="btn btn-soft-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasViewqrightSide" aria-controls="offcanvasViewqrightSide"  @click="gettrackInfo(trackData.app_id, trackData.pageid)">
             <i class="ti ti-file-info"></i>
           </button> -->
         </div>

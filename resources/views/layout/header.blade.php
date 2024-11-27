@@ -7,10 +7,10 @@
     <div class="header shadow-sm">
 
       <div class="header-left active">
-        <a href="index.html" class="logo logo-normal">
+        <a href="./create-quote?tab-page=default" class="logo logo-normal">
           <img src="{{ url('assets/img/bcic-logo-w.png') }} " alt="Logo">
         </a>
-        <a href="index.html" class="logo-small">
+        <a href="./create-quote?tab-page=default" class="logo-small">
           <img src="{{ url('assets/img/bcic-logo-sm.png') }} " alt="Logo"> 
         </a>
         <a id="toggle_btn" href="javascript:void(0);">
@@ -55,9 +55,9 @@
             </ul>
           </li>
           
-          <li class="nav-item"><a href="{{ url('./create-quote') }}">  SALES ( + ) </a> </li>
-          <li class="nav-item"><a href="{{ url('./operation-system') }}">  OTD </a> </li>
-          <li class="nav-item"><a href="{{ url('./operation-system') }}">  OPERATIONS </a> </li>
+          <li class="nav-item"><a href="{{ url('./create-quote?tab-page=sales') }}">  SALES ( + ) </a> </li>
+          <li class="nav-item"><a href="{{ url('./operation-system?tab-page=otd') }}">  OTD </a> </li>
+          <li class="nav-item"><a href="{{ url('./operation-system?tab-page=operation') }}">  OPERATIONS </a> </li>
           <li class="nav-item"><a href="javascript:void(0);">  HR </a> </li>
           <li class="nav-item"><a href="javascript:void(0);">  SETTING </a> </li>
           <li class="nav-item"><a href="javascript:void(0);">  CALL REVIEW </a> </li>
@@ -107,13 +107,13 @@
 
 
           <li class="nav-item nav-item-chat nav-item-box">
-            <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chat">
+            <a href="./bcic-chat" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chat">
               <i class="ti ti-brand-wechat"></i>
             </a>
           </li>
 
           <li class="nav-item nav-item-message nav-item-box">
-            <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Message">
+            <a href="./bcic-sms" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Message">
               <i class="ti ti-message"></i>
             </a>
           </li>
@@ -324,3 +324,4 @@
 
     </div>
     
+   
